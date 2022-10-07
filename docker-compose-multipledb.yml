@@ -17,6 +17,22 @@ services:
       - db-dev:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
+  db-test:
+    image: mysql:8.0
+    restart: always
+    container_name: homelessnessdb_test
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_DATABASE=homelessness
+      - MYSQL_ROOT_PASSWORD=homelessness
+      - MYSQL_USER=homelessness
+      - MYSQL_PASSWORD=homelessness
+    ports:
+      - "3307:3306"
+    volumes:
+      - db-test:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
   adminer:
     container_name: homelessnessAdminer
     image: adminer
@@ -29,4 +45,6 @@ services:
       - db-dev
 volumes:
   db-dev:
+    driver: local
+  db-test:
     driver: local
