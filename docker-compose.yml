@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  mysqldb:
+    image: mysql:8.0
+    restart: always
+    container_name: homelessnessdb
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_DATABASE=homelessness
+      - MYSQL_ROOT_PASSWORD=homelessness
+      - MYSQL_USER=homelessness
+      - MYSQL_PASSWORD=homelessness
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+  adminer:
+    container_name: homelessnessAdminer
+    image: adminer
+    restart: always
+    environment:
+      ADMINER_DEFAULT_SERVER: mysqldb
+    ports:
+      - 8090:8080
+    depends_on:
+      - mysqldb
+volumes:
+  db:
+    driver: local
