@@ -10,6 +10,8 @@ You need to have Docker and Docker Compose installed on your system. MySQL datab
 
 All required informations related to DB name, login and password are stored in `docker-compose.yml` file.
 
+> Running app in the background with package `pm2` : `pm2 start npm --name "api" -- start` . To install pm2 run command `npm install pm2@latest -g`
+
 ## DB Migrations
 
 Used library: `db-migrate`
