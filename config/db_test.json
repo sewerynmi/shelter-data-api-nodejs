@@ -1,0 +1,11 @@
+{
+  "dev": {
+    "driver": "mysql",
+    "user": "homelessness",
+    "password": "homelessness",
+    "host": "localhost",
+    "database": "homelessness",
+    "port": 3307
+  },
+  "sql-file": true
+}
