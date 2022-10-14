@@ -1,5 +1,15 @@
 # Shelter Data API (Node.js)
 
+## Running the app
+
+> run `npm install` to install all required dependencies
+
+> Then run `npm start` to start the app
+
+You need to have Docker and Docker Compose installed on your system. MySQL database starts as a docker container.
+
+All required informations related to DB name, login and password are stored in `docker-compose.yml` file.
+
 ## DB Migrations
 
 Used library: `db-migrate`
