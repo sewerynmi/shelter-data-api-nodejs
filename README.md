@@ -47,7 +47,7 @@ Returns all data from homelessness table
 
 - **URL**
 
-  /api/homelessness/data
+  /api/homelessness
 
 - **Method:**
 
@@ -99,7 +99,38 @@ Returns all data from homelessness table for a given year
     **Example entry:**</br>
     `{ "year": 2022, "period": "Jan-March", "location_id": "loc1", "location_name": "ENGLAND", "total_init": 1999, "total_oprd": 1888, "threatened": 1777, "homeless_relief_duty": 1666 }`
 
-## DB Migrations
+## **Get all homelessness entries for given year and location**
+
+Returns all data from homelessness table for a given year and location (by its ID)
+
+- **URL**
+
+  /api/homelessness/year/:year/location/:location
+
+- **Method:**
+
+  `GET`
+
+- **URL Params**
+
+  **Required:**
+
+  `year=[integer]`
+
+  `location=[string]`
+
+- **Data Params**
+
+  None
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:** `{ "result": [ <entries_here> ] }` <br />
+    **Example entry:**</br>
+    `{ "year": 2022, "period": "Jan-March", "location_id": "loc1", "location_name": "ENGLAND", "total_init": 1999, "total_oprd": 1888, "threatened": 1777, "homeless_relief_duty": 1666 }`
+
+# DB Migrations
 
 Used library: `db-migrate`
 
@@ -121,7 +152,7 @@ Then apply migration run command:
 
 The name given before is important here. Must be
 
-## ToDo
+# ToDo
 
 ### IMPORTANT
 
