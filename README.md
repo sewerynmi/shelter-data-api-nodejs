@@ -78,6 +78,8 @@ Returns all data from homelessness table for a given year
 
   /api/homelessness/year/:year
 
+  Example: /api/homelessness/year/2022
+
 - **Method:**
 
   `GET`
@@ -106,6 +108,8 @@ Returns all data from homelessness table for a given year and location (by its I
 - **URL**
 
   /api/homelessness/year/:year/location/:location
+
+  example: /api/homelessness/year/2022/location/loc1
 
 - **Method:**
 
