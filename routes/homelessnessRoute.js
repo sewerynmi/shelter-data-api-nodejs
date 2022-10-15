@@ -13,7 +13,7 @@ router.get("/healthcheck", async (req, res) => {
 /*
  *   GET all from homelessness table
  */
-router.get("/data", async (req, res) => {
+router.get("/", async (req, res) => {
   const sql = "SELECT * FROM homelessness";
   homelessnessDatabase.query(sql, (err, result) => {
     if (err) throw err;
@@ -24,7 +24,7 @@ router.get("/data", async (req, res) => {
 /*
  *   GET all from homelessness table for given year
  */
-router.get("/data/year/:year", async (req, res) => {
+router.get("/year/:year", async (req, res) => {
   const requiredYear = req.params.year;
   const sql = `SELECT * FROM homelessness where year = ${requiredYear}`;
   homelessnessDatabase.query(sql, (err, result) => {
@@ -36,7 +36,7 @@ router.get("/data/year/:year", async (req, res) => {
 /*
  *   GET all from homelessness table for given year and location
  */
-router.get("/data/year/:year/location/:location", async (req, res) => {
+router.get("/year/:year/location/:location", async (req, res) => {
   const requiredYear = req.params.year;
   const requiredLoation = req.params.location;
   const sql = `SELECT * FROM homelessness WHERE year = ${requiredYear} AND location_id = '${requiredLoation}'`;
@@ -49,7 +49,7 @@ router.get("/data/year/:year/location/:location", async (req, res) => {
 /*
  *   POST new data to homelessness table
  */
-router.post("/data", async (req, res) => {
+router.post("/", async (req, res) => {
   const requestBody = req.body;
   console.log(requestBody);
   // Validation: check if request body has valid format
