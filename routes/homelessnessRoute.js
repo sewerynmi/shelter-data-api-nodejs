@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
-
 const mysql = require("../database");
-
-
 const homelessnessDatabase = mysql;
+const {
+  homelessnessDataSchema,
+  homelessnessValidator,
+} = require("../validators/homelessness-validators");
+
 /*
  *   Healthcheck
  */
