@@ -1,21 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const mysql = require("mysql2");
 
-const {
-  homelessnessValidator,
-  homelessnessDataSchema,
-} = require("../validators/homelessness-validators");
+const mysql = require("../database");
 
-const homelessnessDatabase = mysql.createConnection({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  insecureAuth: true,
-});
 
+const homelessnessDatabase = mysql;
 /*
  *   Healthcheck
  */
@@ -26,8 +15,33 @@ router.get("/healthcheck", async (req, res) => {
 /*
  *   GET all from homelessness table
  */
-router.get("/data", async (req, res) => {
+router.get("/", async (req, res) => {
   const sql = "SELECT * FROM homelessness";
+  homelessnessDatabase.query(sql, (err, result) => {
+    if (err) throw err;
+    res.status(200).send({ result });
+  });
+});
+
+/*
+ *   GET all from homelessness table for given year
+ */
+router.get("/year/:year", async (req, res) => {
+  const requiredYear = req.params.year;
+  const sql = `SELECT * FROM homelessness where year = ${requiredYear}`;
+  homelessnessDatabase.query(sql, (err, result) => {
+    if (err) throw err;
+    res.status(200).send({ result });
+  });
+});
+
+/*
+ *   GET all from homelessness table for given year and location
+ */
+router.get("/year/:year/location/:location", async (req, res) => {
+  const requiredYear = req.params.year;
+  const requiredLoation = req.params.location;
+  const sql = `SELECT * FROM homelessness WHERE year = ${requiredYear} AND location_id = '${requiredLoation}'`;
   homelessnessDatabase.query(sql, (err, result) => {
     if (err) throw err;
     res.status(200).send({ result });
@@ -37,7 +51,7 @@ router.get("/data", async (req, res) => {
 /*
  *   POST new data to homelessness table
  */
-router.post("/data", async (req, res) => {
+router.post("/", async (req, res) => {
   const requestBody = req.body;
   // Validate headers
   if (req.get("Content-Type") != "application/json") {

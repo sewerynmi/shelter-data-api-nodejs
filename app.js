@@ -1,22 +1,13 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
 const bodyParser = require("body-parser");
-const mysql = require("mysql2");
+const mysql = require("./database");
 
 const app = express();
 app.use(bodyParser.json());
 
 /** DB  **/
-
-const homelessnessDatabase = mysql.createConnection({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  insecureAuth: true,
-});
-
+const homelessnessDatabase = mysql;
 // ** App Routes ** //
 const homelessnessRoute = require("./routes/homelessnessRoute");
 app.use("/api/homelessness", homelessnessRoute);
