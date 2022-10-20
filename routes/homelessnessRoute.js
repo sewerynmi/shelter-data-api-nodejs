@@ -59,7 +59,7 @@ router.post("/data", async (req, res) => {
   }
   // Insert data not present in DB
   const insertResult = await insertData(requestBody, homelessnessDatabase);
-  res.status(201).send({ result: insertResult });
+  res.status(insertResult.status).send({ result: insertResult });
 });
 
 const buildInsertSql = (year, period, rowdata) => {
@@ -92,20 +92,23 @@ const insertData = async (input, database) => {
   );
   let statusCode = 400;
   let result = {
-    status: statusCode,
+    totalRows: numRecords,
     inserted: 0,
-    errors: [],
     duplicated: 0,
     duplicates: [],
+    status: statusCode,
+    errors: [],
   };
 
   for (let i = 0; i < numRecords; i++) {
+    result.status = 200;
     const sql = buildInsertSql(input.year, input.period, input.values[i]);
     await homelessnessDatabase
       .promise()
       .execute(sql)
       .then(([rows, fields]) => {
         result.inserted += 1;
+        result.status = 201;
       })
       .catch((err) => {
         //throw err;
@@ -122,7 +125,6 @@ const insertData = async (input, database) => {
   }
 
   result.duplicated = result.duplicates.length;
-  result.status = 201;
   return result;
 };
 
