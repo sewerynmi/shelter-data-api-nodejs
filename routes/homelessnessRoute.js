@@ -2,6 +2,11 @@ const express = require("express");
 const router = express.Router();
 const mysql = require("mysql2");
 
+const {
+  homelessnessValidator,
+  homelessnessDataSchema,
+} = require("../validators/homelessness-validators");
+
 const homelessnessDatabase = mysql.createConnection({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -34,8 +39,22 @@ router.get("/data", async (req, res) => {
  */
 router.post("/data", async (req, res) => {
   const requestBody = req.body;
-  console.log(requestBody);
-  // Validation: check if request body has valid format
+  // Validate headers
+  if (req.get("Content-Type") != "application/json") {
+    res.status(401).send("Invalid header format");
+    return;
+  }
+  try {
+    // Validation: check if request body has valid format
+
+    homelessnessValidator.validate(requestBody, homelessnessDataSchema, {
+      throwError: true,
+    });
+    console.log("validation");
+  } catch (error) {
+    res.status(401).end("Invalid body format: " + error.message);
+    return;
+  }
   // Validation: check if any entry exist in the DB table
   // Insert data not present in DB
   res.status(201).send({ result: "attempt to insert data to DB" });
