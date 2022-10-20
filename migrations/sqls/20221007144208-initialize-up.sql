@@ -10,5 +10,5 @@ CREATE TABLE homelessness.homelessness (
   PRIMARY KEY (year, period, location_id)) ENGINE=InnoDB CHARSET=utf8;
 
 
-INSERT INTO homelessness.homelessness (year, period, location_id, location_name, total_init, total_oprd, threatened, homeless_relief_duty) VALUES (2022, 'Jan-March', 'loc1', 'ENGLAND', 1999, 1888, 1777, 1666);
-INSERT INTO homelessness.homelessness (year, period, location_id, location_name, total_init, total_oprd, threatened, homeless_relief_duty) VALUES (2022, 'Jan-March', 'loc2', 'London', 223, 223, 556, 234);
+-- INSERT INTO homelessness.homelessness (year, period, location_id, location_name, total_init, total_oprd, threatened, homeless_relief_duty) VALUES (2022, 'Jan-March', 'loc1', 'ENGLAND', 1999, 1888, 1777, 1666);
+-- INSERT INTO homelessness.homelessness (year, period, location_id, location_name, total_init, total_oprd, threatened, homeless_relief_duty) VALUES (2022, 'Jan-March', 'loc2', 'London', 223, 223, 556, 234);
