@@ -19,6 +19,16 @@ CREATE TABLE homelessness.locations (
 -- INSERT INTO homelessness.homelessness (year, period, location_id, location_name, total_init, total_oprd, threatened, homeless_relief_duty) VALUES (2022, 'Jan-March', 'loc1', 'ENGLAND', 1999, 1888, 1777, 1666);
 -- INSERT INTO homelessness.homelessness (year, period, location_id, location_name, total_init, total_oprd, threatened, homeless_relief_duty) VALUES (2022, 'Jan-March', 'loc2', 'London', 223, 223, 556, 234);
 
+INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E92000001", "England", 55980000);
+INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E12000007", "London", 8982000);
+INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E12000001", "North East", 2657000);
+INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E12000002", "North West", 7300000);
+INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E12000003", "Yorkshire and The Humber", 5486000);
+INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E12000004", "East Midlands", 4811000);
+INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E12000005", "West Midlands", 2928000);
+INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E12000006", "East of England", 6235000);
+INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E12000008", "South East", 9175000);
+INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E12000009", "South West", 5616000);
 INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E06000001", "Hartlepool", 92300);
 INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E06000002", "Middlesbrough", 143900);
 INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E06000003", "Redcar and Cleveland", 136500);
