@@ -144,4 +144,25 @@ const insertData = async (input, database) => {
   return result;
 };
 
+// ================ to load population csv
+const fs = require("fs");
+const { parse } = require("csv-parse");
+
+// Read CSV
+
+router.get("/load", async (req, res) => {
+  await fs
+    .createReadStream("./populations.csv")
+    .pipe(parse({ delimiter: "," }))
+    .on("data", function (row) {
+      let r =
+        "INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ";
+      r += `("${row[0]}", "${row[1]}", ${row[2]});`;
+      console.log(r);
+    });
+
+  res.status(200).send("population load");
+});
+
+// ================ END to load population csv
 module.exports = router;
