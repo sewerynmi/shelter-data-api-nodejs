@@ -18,7 +18,10 @@ router.get("/healthcheck", async (req, res) => {
  *   GET all from homelessness table
  */
 router.get("/", async (req, res) => {
-  const sql = "SELECT * FROM homelessness";
+  const sql =
+    "SELECT h.*, l.location_population FROM homelessness.homelessness as h " +
+    "LEFT JOIN homelessness.locations as l ON " +
+    " l.location_id = h.location_id ;";
   homelessnessDatabase.query(sql, (err, result) => {
     if (err) throw err;
     res.status(200).send({ result });
@@ -30,7 +33,11 @@ router.get("/", async (req, res) => {
  */
 router.get("/year/:year", async (req, res) => {
   const requiredYear = req.params.year;
-  const sql = `SELECT * FROM homelessness where year = ${requiredYear}`;
+  const sql =
+    "SELECT h.*, l.location_population FROM homelessness.homelessness as h " +
+    "LEFT JOIN homelessness.locations as l ON " +
+    " l.location_id = h.location_id " +
+    ` WHERE year = ${requiredYear}`;
   homelessnessDatabase.query(sql, (err, result) => {
     if (err) throw err;
     res.status(200).send({ result });
@@ -43,7 +50,11 @@ router.get("/year/:year", async (req, res) => {
 router.get("/year/:year/location/:location", async (req, res) => {
   const requiredYear = req.params.year;
   const requiredLoation = req.params.location;
-  const sql = `SELECT * FROM homelessness WHERE year = ${requiredYear} AND location_id = '${requiredLoation}'`;
+  const sql =
+    "SELECT h.*, l.location_population FROM homelessness.homelessness as h " +
+    "LEFT JOIN homelessness.locations as l ON " +
+    " l.location_id = h.location_id " +
+    ` WHERE year = ${requiredYear} AND h.location_id = '${requiredLoation}'`;
   homelessnessDatabase.query(sql, (err, result) => {
     if (err) throw err;
     res.status(200).send({ result });
