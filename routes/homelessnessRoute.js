@@ -1,6 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const mysql = require("../database");
+const multer = require("multer");
+const csv = require("fast-csv");
+
+// Upload data file here
+const upload = multer({ dest: "uploads/" });
+
 const homelessnessDatabase = mysql;
 const {
   homelessnessDataSchema,
@@ -31,6 +37,18 @@ router.get("/", async (req, res) => {
 router.get("/year/:year", async (req, res) => {
   const requiredYear = req.params.year;
   const sql = `SELECT * FROM homelessness where year = ${requiredYear}`;
+  homelessnessDatabase.query(sql, (err, result) => {
+    if (err) throw err;
+    res.status(200).send({ result });
+  });
+});
+
+/*
+ *   GET all from homelessness table for given location (by id)
+ */
+router.get("/location/:location", async (req, res) => {
+  const requiredLocation = req.params.location;
+  const sql = `SELECT * FROM homelessness where location_id = '${requiredLocation}'`;
   homelessnessDatabase.query(sql, (err, result) => {
     if (err) throw err;
     res.status(200).send({ result });
@@ -144,13 +162,14 @@ const insertData = async (input, database) => {
   return result;
 };
 
-// ================ to load population csv
+// ================ Function used to load population CSV
+// They will output in termian SQL queries that should be copied to the migration file or run manually
 const fs = require("fs");
 const { parse } = require("csv-parse");
 
 // Read CSV
 
-router.get("/load", async (req, res) => {
+router.get("/load/population", async (req, res) => {
   await fs
     .createReadStream("./populations.csv")
     .pipe(parse({ delimiter: "," }))
@@ -164,5 +183,40 @@ router.get("/load", async (req, res) => {
   res.status(200).send("population load");
 });
 
-// ================ END to load population csv
+// ================ END Function used to load population CSV
+
+// ================ Function used to load dataset for given year and period
+router.post("/load/data", upload.single("datafile"), async (req, res, next) => {
+  const year = req.body.year;
+  const period = req.body.period;
+
+  const fileRows = [];
+  csv
+    .parseFile(req.file.path)
+    .on("data", function (data) {
+      fileRows.push(data); // push each row
+    })
+    .on("end", function () {
+      //console.log(fileRows); //contains array of arrays. Each inner array represents row of the csv file, with each element of it a column
+      fs.unlinkSync(req.file.path); // remove temp file
+      //process "fileRows" and respond
+      for (let i = 1; i < fileRows.length; i++) {
+        const row = fileRows[i];
+        const location_id = row[0];
+        const location_name = row[1];
+        const total_init = row[2];
+        const total_oprd = row[3];
+        const threatened = row[4];
+        const homeless_relief_duty = row[5];
+        const sql = `INSERT INTO homelessness.homelessness 
+            (year, period, location_id, location_name, total_init, total_oprd, threatened, homeless_relief_duty) 
+            VALUES ('${year}', '${period}', "${location_id}", "${location_name}", '${total_init}', '${total_oprd}', '${threatened}', '${homeless_relief_duty}');`;
+        console.log(sql);
+      }
+    });
+
+  //fs.unlink(file_path);
+  res.status(200).send("data load");
+});
+
 module.exports = router;
