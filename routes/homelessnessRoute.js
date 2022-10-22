@@ -186,6 +186,11 @@ router.get("/load/population", async (req, res) => {
 // ================ END Function used to load population CSV
 
 // ================ Function used to load dataset for given year and period
+// 1st iteration: - will export SQL INSERT statements for each row in data file
+// using that endpoint uses 'form-data'
+// it require 3 keys: datafile (select file to upload, example ./raw_dataset_csv/jan-mar-2022.csv)
+// year: year for the dataset (e.g. 2022)
+// period: period of the dataset (e.g. jan-mar)
 router.post("/load/data", upload.single("datafile"), async (req, res, next) => {
   const year = req.body.year;
   const period = req.body.period;
