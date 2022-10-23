@@ -6,12 +6,13 @@ const mysql = require("./database");
 const app = express();
 app.use(bodyParser.json());
 
-/** DB  **/
+/* DB */
 const homelessnessDatabase = mysql;
-// ** App Routes ** //
+/* App Routes */
 const homelessnessRoute = require("./routes/homelessnessRoute");
 app.use("/api/homelessness", homelessnessRoute);
 
+/* DB connection */
 homelessnessDatabase.connect((err) => {
   if (err) throw err;
   console.log("Connected to MySQL database");

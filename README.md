@@ -6,13 +6,11 @@
 
 > Then run `npm start` to start the app
 
-You need to have Docker and Docker Compose installed on your system. MySQL database starts as a docker container.
+> You need to have Docker and Docker Compose installed on your system. MySQL database starts as a docker container.
 
 All required informations related to DB name, login and password are stored in `docker-compose.yml` file.
 
-> Running app in the background with package `pm2` : `pm2 start npm --name "api" -- start` . To install pm2 run command `npm install pm2@latest -g`
-
-> Keep the app running on startup with pm2. Use command: `pm2 startup`
+> Optional: Running app in the background with package `pm2` : `pm2 start npm --name "api" -- start` . To install pm2 run command `npm install pm2@latest -g`. Keep the app in running on startup with pm2. Use command: `pm2 startup`
 
 # Homelessness API Endpoints
 
@@ -160,4 +158,4 @@ The name given before is important here. Must be
 
 ### IMPORTANT
 
-> Remove `.env` file from the repo. This shouldn't be here, but was pushed as I forgot to add it to .gitignore
+> Remove `.env` file from the Shelter final repository.

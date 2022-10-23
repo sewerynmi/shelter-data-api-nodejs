@@ -3,6 +3,9 @@ const homelessnessValidator = new Validator();
 
 const currYear = new Date().getFullYear();
 
+/*
+  Validation schema for data insertion
+*/
 const homelessnessDataSchema = {
   id: "/HomelessnessData",
   type: "object",
@@ -20,6 +23,9 @@ const homelessnessDataSchema = {
   required: ["year", "period", "values"],
 };
 
+/*
+  Validation schema for each data row
+*/
 const homelessnessEntrySchema = {
   id: "/HomelessnessEntry",
   type: "object",

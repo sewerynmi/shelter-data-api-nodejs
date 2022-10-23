@@ -45,6 +45,22 @@ router.get("/year/:year", async (req, res) => {
 });
 
 /*
+ *   GET all from homelessness table for given location
+ */
+router.get("/location/:location", async (req, res) => {
+  const requiredLocation = req.params.location;
+  const sql =
+    "SELECT h.*, l.location_population FROM homelessness.homelessness as h " +
+    "LEFT JOIN homelessness.locations as l ON " +
+    " l.location_id = h.location_id " +
+    ` WHERE h.location_id = "${requiredLocation}"`;
+  homelessnessDatabase.query(sql, (err, result) => {
+    if (err) throw err;
+    res.status(200).send({ result });
+  });
+});
+
+/*
  *   GET all from homelessness table for given year and location
  */
 router.get("/year/:year/location/:location", async (req, res) => {
@@ -62,7 +78,7 @@ router.get("/year/:year/location/:location", async (req, res) => {
 });
 
 /*
- *   POST new data to homelessness table
+ *   Add new data to homelessness table
  */
 router.post("/", async (req, res) => {
   const requestBody = req.body;
@@ -89,28 +105,9 @@ router.post("/", async (req, res) => {
   res.status(insertResult.status).send({ result: insertResult });
 });
 
-const buildInsertSql = (year, period, rowdata) => {
-  let location_id = rowdata.location_id;
-  let location_name = rowdata.location_name;
-  let total_init = rowdata.total_init;
-  let total_oprd = rowdata.total_oprd;
-  let threatened = rowdata.threatened;
-  let homeless_relief_duty = rowdata.homeless_relief_duty;
-
-  let sql = `INSERT INTO homelessness SET 
-    year=${year}, 
-    period="${period}",
-    location_id="${location_id}",
-    location_name="${location_name}",
-    total_init=${total_init},
-    total_oprd=${total_oprd},
-    threatened=${threatened},
-    homeless_relief_duty=${homeless_relief_duty}
-    `;
-
-  return sql;
-};
-
+/*
+ Inserting data into DB
+*/
 const insertData = async (input, database) => {
   let numRecords = input.values.length;
   console.log(
@@ -138,7 +135,6 @@ const insertData = async (input, database) => {
         result.status = 201;
       })
       .catch((err) => {
-        //throw err;
         let errCode = err.code;
         let errNo = err.errno;
         let errSqlMessage = err.sqlMessage;
@@ -153,6 +149,31 @@ const insertData = async (input, database) => {
 
   result.duplicated = result.duplicates.length;
   return result;
+};
+
+/*
+ Build SQL query for data instert
+*/
+const buildInsertSql = (year, period, rowdata) => {
+  let location_id = rowdata.location_id;
+  let location_name = rowdata.location_name;
+  let total_init = rowdata.total_init;
+  let total_oprd = rowdata.total_oprd;
+  let threatened = rowdata.threatened;
+  let homeless_relief_duty = rowdata.homeless_relief_duty;
+
+  let sql = `INSERT INTO homelessness SET 
+    year=${year}, 
+    period="${period}",
+    location_id="${location_id}",
+    location_name="${location_name}",
+    total_init=${total_init},
+    total_oprd=${total_oprd},
+    threatened=${threatened},
+    homeless_relief_duty=${homeless_relief_duty}
+    `;
+
+  return sql;
 };
 
 module.exports = router;
