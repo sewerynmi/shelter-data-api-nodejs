@@ -2,9 +2,10 @@ const express = require("express");
 const dotenv = require("dotenv").config();
 const bodyParser = require("body-parser");
 const mysql = require("./database");
-
+var cors = require("cors");
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 /* DB */
 const homelessnessDatabase = mysql;

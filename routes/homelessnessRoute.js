@@ -10,7 +10,7 @@ const {
 /*
  *   Healthcheck
  */
-router.get("/healthcheck", async (req, res) => {
+router.get("/healthcheck", async (req, res, next) => {
   return res.status(200).send({ messsage: "OK" });
 });
 
@@ -47,7 +47,7 @@ router.get("/year/:year", async (req, res) => {
 /*
  *   GET all from homelessness table for given location
  */
-router.get("/location/:location", async (req, res) => {
+router.get("/location/:location", async (req, res, next) => {
   const requiredLocation = req.params.location;
   const sql =
     "SELECT h.*, l.location_population FROM homelessness.homelessness as h " +

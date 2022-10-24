@@ -17,6 +17,7 @@ CREATE TABLE homelessness.locations (
 
 -- MIGRATION: LOCATIONS
 
+INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E12000007", "London", 8982000);
 INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E06000001", "Hartlepool", 92300);
 INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E06000002", "Middlesbrough", 143900);
 INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ("E06000003", "Redcar and Cleveland", 136500);
