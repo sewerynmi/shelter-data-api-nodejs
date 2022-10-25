@@ -159,3 +159,5 @@ The name given before is important here. Must be
 ### IMPORTANT
 
 > Remove `.env` file from the Shelter final repository.
+
+> Locations table should be changed and it requires to migrate population data for each quarter and the each year of the data files to reflect correct statistics.

@@ -357,6 +357,12 @@ INSERT INTO homelessness.homelessness
 INSERT INTO homelessness.homelessness
             (year, period, location_id, location_name, total_init, total_oprd, threatened, homeless_relief_duty)
             VALUES ('2022', 'jan-mar', "E12000007", "London", '13610', '13050', '6140', '6910');
+
+INSERT INTO homelessness.homelessness
+            (year, period, location_id, location_name, total_init, total_oprd, threatened, homeless_relief_duty)
+            VALUES ('2022', 'apr-jun', "E12000007", "London", '14220', '14050', '6190', '7070');
+
+
 INSERT INTO homelessness.homelessness
             (year, period, location_id, location_name, total_init, total_oprd, threatened, homeless_relief_duty)
             VALUES ('2022', 'jan-mar', "E12000001", "North East", '4760', '4670', '2810', '1860');
