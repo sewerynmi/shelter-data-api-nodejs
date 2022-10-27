@@ -175,8 +175,13 @@ router.get("/load/population", async (req, res) => {
     .pipe(parse({ delimiter: "," }))
     .on("data", function (row) {
       let r =
-        "INSERT INTO homelessness.locations (location_id, location_name, location_population) VALUES ";
-      r += `("${row[0]}", "${row[1]}", ${row[2]});`;
+        "INSERT INTO homelessness.locations (location_id, location_name) VALUES ";
+      r += `("${row[0]}", "${row[1]}");`;
+
+      r +=
+        "INSERT INTO homelessness.populations (location_id, year, population) VALUES ";
+      r += `("${row[0]}", 2022, ${row[2]});`;
+
       console.log(r);
     });
 
