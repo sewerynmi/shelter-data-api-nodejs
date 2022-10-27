@@ -1,3 +1,5 @@
-DROP TABLE homelessness.homelessness;
-DROP TABLE homelessness.locations;
-DROP TABLE homelessness.migrations;
+use homelessness;
+drop table homelessness;
+drop table migrations;
+drop table locations;
+drop table populations;

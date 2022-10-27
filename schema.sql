@@ -1,13 +1,23 @@
 USE homelessness;
 
-CREATE TABLE homelessness (
-  location_id varchar(15) NOT NULL,
-  year varchar(45) NOT NULL,
-  quarter varchar(2) NOT NULL,
-  location_name varchar(80) DEFAULT NULL,
-  total_init int DEFAULT NULL,
-  total_oprd int DEFAULT NULL,
-  threatened int DEFAULT NULL,
-  homeless_relief_duty int DEFAULT NULL,
-  PRIMARY KEY (location_id,year,quarter)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+CREATE TABLE homelessness.homelessness (
+  year INT NOT NULL,
+  period VARCHAR(45) NOT NULL,
+  location_id VARCHAR(45) NOT NULL,
+  location_name VARCHAR(100) NOT NULL,
+  total_init INT NULL,
+  total_oprd INT NULL,
+  threatened INT NULL,
+  homeless_relief_duty INT NULL,
+  PRIMARY KEY (year, period, location_id)) ENGINE=InnoDB CHARSET=utf8;
+
+CREATE TABLE homelessness.locations (
+  location_id VARCHAR(45) NOT NULL,
+  location_name VARCHAR(100) NOT NULL,
+  PRIMARY KEY (location_id)) ENGINE=InnoDB CHARSET=utf8;
+
+CREATE TABLE homelessness.populations (
+  location_id VARCHAR(45) NOT NULL,
+  year INT NOT NULL,
+  population INT NOT NULL,
+  PRIMARY KEY(location_id, year)) ENGINE=InnoDB CHARSET=utf8;
